@@ -123,12 +123,14 @@ pub enum SslMethod {
     #[cfg(feature = "sslv2")]
     /// Only support the SSLv2 protocol, requires the `sslv2` feature.
     Sslv2,
+    #[cfg(feature = "sslv23")]
     /// Support the SSLv2, SSLv3, TLSv1, TLSv1.1, and TLSv1.2 protocols depending on what the
     /// linked OpenSSL library supports.
     Sslv23,
     #[cfg(feature = "sslv3")]
     /// Only support the SSLv3 protocol.
     Sslv3,
+    #[cfg(feature = "tlsv1")]
     /// Only support the TLSv1 protocol.
     Tlsv1,
     #[cfg(feature = "tlsv1_1")]
@@ -152,7 +154,9 @@ impl SslMethod {
             SslMethod::Sslv2 => ffi::SSLv2_method(),
             #[cfg(feature = "sslv3")]
             SslMethod::Sslv3 => ffi::SSLv3_method(),
+            #[cfg(feature = "tlsv1")]
             SslMethod::Tlsv1 => ffi::TLSv1_method(),
+            #[cfg(feature = "sslv23")]
             SslMethod::Sslv23 => ffi::SSLv23_method(),
             #[cfg(feature = "tlsv1_1")]
             SslMethod::Tlsv1_1 => ffi::TLSv1_1_method(),
@@ -171,7 +175,9 @@ impl SslMethod {
             x if x == ffi::SSLv2_method() => Some(SslMethod::Sslv2),
             #[cfg(feature = "sslv3")]
             x if x == ffi::SSLv3_method() => Some(SslMethod::Sslv3),
+            #[cfg(feature = "tlsv1")]
             x if x == ffi::TLSv1_method() => Some(SslMethod::Tlsv1),
+            #[cfg(feature = "sslv23")]
             x if x == ffi::SSLv23_method() => Some(SslMethod::Sslv23),
             #[cfg(feature = "tlsv1_1")]
             x if x == ffi::TLSv1_1_method() => Some(SslMethod::Tlsv1_1),
